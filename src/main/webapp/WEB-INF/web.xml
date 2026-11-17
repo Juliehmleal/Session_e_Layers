@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <!-- Tempo de expiração da sessão: 30 minutos -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- 1º Filtro da cadeia: mede o tempo de TODAS as requisições (inclusive as recusadas com 401) -->
+    <filter>
+        <filter-name>FiltroTempo</filter-name>
+        <filter-class>br.edu.ifsp.web.filter.FiltroTempo</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroTempo</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- 2º Filtro da cadeia: protege apenas /tarefas/* -->
+    <filter>
+        <filter-name>FiltroAutenticacao</filter-name>
+        <filter-class>br.edu.ifsp.web.filter.FiltroAutenticacao</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroAutenticacao</filter-name>
+        <url-pattern>/tarefas/*</url-pattern>
+    </filter-mapping>
+</web-app>
